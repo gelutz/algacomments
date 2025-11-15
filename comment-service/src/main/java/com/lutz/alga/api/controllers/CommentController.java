@@ -2,6 +2,7 @@ package com.lutz.alga.api.controllers;
 
 import java.util.UUID;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lutz.alga.api.dtos.CommentInput;
 import com.lutz.alga.api.dtos.CommentOutput;
+import com.lutz.alga.api.services.CommentService;
+import com.lutz.alga.domain.models.Comment;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,24 +22,21 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/comments")
 @RequiredArgsConstructor
 public class CommentController {
+    private final CommentService commentService;
 
     @GetMapping
-    public CommentOutput get(@PageableDefault Pageable pageable) {
-        // return commentRepository.findAll(pageable);
-        return null;
+    public Page<Comment> get(@PageableDefault Pageable pageable) {
+        return commentService.findAll(pageable);
     }
 
     @GetMapping("{commentId}")
     public CommentOutput find(@PathVariable UUID commentId) {
-        // return commentRepository.findById(commentId);
-        return null;
+        return CommentOutput.fromModel(commentService.findById(commentId));
     }
 
     @PostMapping
     public CommentOutput create(CommentInput input) {
-        return null;
-        // Comment comment = input.toModel();
-        // commentRepository.save(comment)
-        // return CommentOutput.from(comment);
+        Comment comment = commentService.create(input);
+        return CommentOutput.fromModel(comment);
     }
 }

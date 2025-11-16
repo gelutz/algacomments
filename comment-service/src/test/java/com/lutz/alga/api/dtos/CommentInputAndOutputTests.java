@@ -1,4 +1,4 @@
-package com.lutz.alga.api.services;
+package com.lutz.alga.api.dtos;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -8,8 +8,6 @@ import java.time.OffsetDateTime;
 
 import org.junit.jupiter.api.Test;
 
-import com.lutz.alga.api.dtos.CommentInput;
-import com.lutz.alga.api.dtos.CommentOutput;
 import com.lutz.alga.domain.exceptions.BadInputException;
 import com.lutz.alga.domain.models.Comment;
 import com.lutz.alga.shared.IDUtils;

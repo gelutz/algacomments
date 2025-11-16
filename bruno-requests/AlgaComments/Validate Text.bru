@@ -1,0 +1,23 @@
+meta {
+  name: Validate Text
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8081/api/moderate
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "text":"lule",
+    "commentId":"f7d54a2c-8aa8-4985-9326-156f07dde052"
+  }
+}
+
+settings {
+  encodeUrl: true
+  timeout: 0
+}

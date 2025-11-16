@@ -1,4 +1,4 @@
-package com.lutz.alga.api.dtos;
+package com.lutz.alga.api.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -20,8 +20,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
+import com.lutz.alga.api.dtos.CommentInput;
 import com.lutz.alga.api.repositories.CommentRepository;
-import com.lutz.alga.api.services.CommentService;
 import com.lutz.alga.domain.models.Comment;
 import com.lutz.alga.shared.IDUtils;
 

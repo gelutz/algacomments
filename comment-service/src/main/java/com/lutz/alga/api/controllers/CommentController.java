@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,7 +36,7 @@ public class CommentController {
     }
 
     @PostMapping
-    public CommentOutput create(CommentInput input) {
+    public CommentOutput create(@RequestBody CommentInput input) {
         Comment comment = commentService.create(input);
         return CommentOutput.fromModel(comment);
     }

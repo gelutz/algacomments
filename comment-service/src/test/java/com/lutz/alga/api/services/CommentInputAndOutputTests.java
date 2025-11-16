@@ -2,6 +2,7 @@ package com.lutz.alga.api.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.time.OffsetDateTime;
 
@@ -9,12 +10,19 @@ import org.junit.jupiter.api.Test;
 
 import com.lutz.alga.api.dtos.CommentInput;
 import com.lutz.alga.api.dtos.CommentOutput;
+import com.lutz.alga.domain.exceptions.BadInputException;
 import com.lutz.alga.domain.models.Comment;
 import com.lutz.alga.shared.IDUtils;
 
 public class CommentInputAndOutputTests {
 	private String textoStub = "Texto teste";
 	private String authorStub = "Gabriel Lutz";
+
+	@Test
+	void commentInputShouldThrowWhenTryingToConvertNullTextOrAuthor() {
+		CommentInput sut = new CommentInput(null, null);
+		assertThrows(BadInputException.class, sut::toModel);
+	}
 
 	@Test
 	void commentInputShouldConvertToComment() {

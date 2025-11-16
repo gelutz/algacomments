@@ -7,7 +7,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.lutz.alga.api.dtos.CommentInput;
+import com.lutz.alga.api.dtos.ModerationInput;
 import com.lutz.alga.api.repositories.CommentRepository;
+import com.lutz.alga.domain.exceptions.ModerationException;
 import com.lutz.alga.domain.models.Comment;
 
 import lombok.NonNull;
@@ -17,9 +19,15 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class CommentService {
     private final CommentRepository commentRepository;
+    private final ModerationService moderationService;
 
     public Comment create(@NonNull CommentInput input) {
-        return commentRepository.save(input.toModel());
+        Comment comment = input.toModel();
+        if (!moderationService.validateText(new ModerationInput(comment.getText(), comment.getId()))) {
+            throw new ModerationException(comment.getText());
+        }
+
+        return commentRepository.save(comment);
     }
 
     public Page<Comment> findAll(Pageable pageable) {

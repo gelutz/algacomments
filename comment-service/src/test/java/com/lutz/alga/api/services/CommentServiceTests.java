@@ -3,6 +3,7 @@ package com.lutz.alga.api.services;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -21,6 +22,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 
 import com.lutz.alga.api.dtos.CommentInput;
+import com.lutz.alga.api.dtos.ModerationInput;
 import com.lutz.alga.api.repositories.CommentRepository;
 import com.lutz.alga.domain.models.Comment;
 import com.lutz.alga.shared.IDUtils;
@@ -32,10 +34,12 @@ public class CommentServiceTests {
     private CommentService sut;
     @Mock
     private CommentRepository commentRepository;
+    @Mock
+    private ModerationService moderationService;
 
     @BeforeEach
-    void init() {
-        sut = new CommentService(commentRepository);
+    void setup() {
+        sut = new CommentService(commentRepository, moderationService);
     }
 
     @Test
@@ -78,6 +82,8 @@ public class CommentServiceTests {
     @Test
     @DisplayName("CommentService::create should use CommentRepository::save and create a new comment with the given CommentInput")
     void commentServiceShouldUseCommentRepositoryToCreateComments() {
+        when(moderationService.validateText(any(ModerationInput.class))).thenReturn(true);
+
         Comment mockedComment = mock(Comment.class);
         when(mockedComment.getId()).thenReturn(idStub);
 

@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 import com.lutz.alga.api.dtos.ModerationInput;
 import com.lutz.alga.api.dtos.ModerationOutput;
 import com.lutz.alga.domain.constants.ForbiddenWordsList;
-import com.lutz.alga.domain.exceptions.BadInputException;
+import com.lutz.alga.domain.exceptions.ModerationException;
 
 public class ModerationServiceTests {
     private ModerationService sut;
@@ -25,7 +25,7 @@ public class ModerationServiceTests {
 
     @Test
     void moderationServiceShouldThrowBadInputExceptionIfTextIsNull() {
-        assertThrows(BadInputException.class, () -> sut.validate(null));
+        assertThrows(ModerationException.class, () -> sut.validate(null));
     }
 
     @Test

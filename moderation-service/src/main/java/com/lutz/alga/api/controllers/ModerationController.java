@@ -11,10 +11,12 @@ import org.springframework.web.server.ResponseStatusException;
 import com.lutz.alga.api.dtos.ModerationInput;
 import com.lutz.alga.api.dtos.ModerationOutput;
 import com.lutz.alga.api.services.ModerationService;
-import com.lutz.alga.domain.exceptions.BadInputException;
+import com.lutz.alga.domain.exceptions.ModerationException;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/moderate")
 @RequiredArgsConstructor
@@ -24,9 +26,10 @@ public class ModerationController {
     @PostMapping
     @ResponseStatus(HttpStatus.OK)
     public ModerationOutput validate(@RequestBody ModerationInput input) {
+        log.info("Receiving input ID {}: {}", input.commentId(), input.text());
         try {
             return service.validate(input);
-        } catch (BadInputException exception) {
+        } catch (ModerationException exception) {
             throw new ResponseStatusException(HttpStatus.BAD_GATEWAY);
         }
     }

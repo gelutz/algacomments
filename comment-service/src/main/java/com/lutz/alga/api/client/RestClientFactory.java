@@ -29,7 +29,7 @@ public class RestClientFactory {
 		return builder.baseUrl(url + ":" + port)
 				.requestFactory(generateClientHttpRequestFactory())
 				.defaultStatusHandler(
-						HttpStatusCode::isError,
+						HttpStatusCode::is5xxServerError,
 						(request, response) -> {
 							log.error("Request error {}", response.getBody());
 							throw new ModerationException(response.getBody().toString());

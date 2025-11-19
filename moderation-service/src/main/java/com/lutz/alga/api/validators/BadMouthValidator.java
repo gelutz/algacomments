@@ -1,6 +1,5 @@
 package com.lutz.alga.api.validators;
 
-import java.time.Duration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 public class BadMouthValidator implements Validator {
     @SneakyThrows
     public boolean validate(@NonNull String input) {
-        Thread.sleep(Duration.ofSeconds(10));
+        // Thread.sleep(Duration.ofSeconds(10));
         boolean valid = true;
 
         log.info(ForbiddenWordsList.WORDS.toString());

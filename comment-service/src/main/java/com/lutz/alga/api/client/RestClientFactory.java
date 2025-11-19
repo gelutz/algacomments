@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.lutz.alga.domain.exceptions.ModerationException;
+import com.lutz.alga.domain.exceptions.IntegrationException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -37,7 +37,7 @@ public class RestClientFactory {
 						HttpStatusCode::is5xxServerError,
 						(request, response) -> {
 							log.error("Request error {}", response.getBody());
-							throw new ModerationException(response.getBody().toString());
+							throw new IntegrationException("Moderation service error");
 						})
 				.build();
 	}

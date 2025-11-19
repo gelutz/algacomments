@@ -88,6 +88,8 @@ public class CommentServiceTests {
         when(mockedComment.getId()).thenReturn(idStub);
 
         CommentInput mockedInput = mock(CommentInput.class);
+        when(mockedInput.text()).thenReturn("Anything");
+        when(mockedInput.author()).thenReturn("Anything");
         when(mockedInput.toModel()).thenReturn(mockedComment);
 
         when(commentRepository.save(mockedComment)).thenReturn(mockedComment);

@@ -9,11 +9,10 @@ import org.springframework.stereotype.Service;
 import com.lutz.alga.api.dtos.CommentInput;
 import com.lutz.alga.api.dtos.ModerationInput;
 import com.lutz.alga.api.repositories.CommentRepository;
+import com.lutz.alga.domain.exceptions.BadInputException;
 import com.lutz.alga.domain.exceptions.ModerationException;
-import com.lutz.alga.domain.exceptions.ResourceNotFoundException;
 import com.lutz.alga.domain.models.Comment;
 
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -22,7 +21,11 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final ModerationService moderationService;
 
-    public Comment create(@NonNull CommentInput input) {
+    public Comment create(CommentInput input) {
+        if (input.text() == null || input.author() == null) {
+            throw new BadInputException("Neither text nor author can be null.");
+        }
+
         Comment comment = input.toModel();
         if (!moderationService.validateText(new ModerationInput(comment.getText(), comment.getId()))) {
             throw new ModerationException(comment.getText());
@@ -36,7 +39,6 @@ public class CommentService {
     }
 
     public Comment findById(UUID id) {
-        return commentRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException());
+        return commentRepository.findById(id).orElse(null);
     }
 }

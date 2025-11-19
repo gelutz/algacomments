@@ -1,4 +1,4 @@
-package com.lutz.alga.api.config;
+package com.lutz.alga.api.validators;
 
 import java.time.Duration;
 import java.util.regex.Matcher;

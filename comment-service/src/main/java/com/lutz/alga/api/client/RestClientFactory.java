@@ -8,6 +8,7 @@ import org.springframework.http.client.ClientHttpRequestFactory;
 import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.lutz.alga.domain.exceptions.ModerationException;
 
@@ -26,7 +27,11 @@ public class RestClientFactory {
 	private String url;
 
 	public RestClient monitorClient() {
-		return builder.baseUrl(url + ":" + port)
+		String uri = UriComponentsBuilder.fromUriString(url)
+				.port(port)
+				.build()
+				.toUriString();
+		return builder.baseUrl(uri)
 				.requestFactory(generateClientHttpRequestFactory())
 				.defaultStatusHandler(
 						HttpStatusCode::is5xxServerError,

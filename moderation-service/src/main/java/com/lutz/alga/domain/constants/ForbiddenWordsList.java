@@ -7,10 +7,7 @@ public class ForbiddenWordsList {
     public static final List<String> WORDS;
 
     static {
-        List<String> wordList = List.of(
-                "lula",
-                "lule",
-                "bolsonaro");
+        List<String> wordList = List.of("ódio", "xingamento");
         WORDS = Collections.unmodifiableList(wordList);
     }
 }
